@@ -13,9 +13,14 @@ public class Sword : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0) && ani.GetBool("isAttacking") == false)
         {
-            //Attack
+            ani.SetBool("isAttacking",true);
         }
+    }
+
+    public void StopAttacking()
+    {
+        ani.SetBool("isAttacking", false);
     }
 }
