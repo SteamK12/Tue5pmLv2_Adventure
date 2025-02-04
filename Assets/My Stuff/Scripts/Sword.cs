@@ -3,6 +3,8 @@ using UnityEngine;
 public class Sword : MonoBehaviour
 {
     Animator ani;
+    [SerializeField] int damage = 10;
+    [SerializeField] float critChance = 0.1f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -22,5 +24,15 @@ public class Sword : MonoBehaviour
     public void StopAttacking()
     {
         ani.SetBool("isAttacking", false);
+    }
+
+    public int DealDamage()
+    {
+        if(Random.Range(0,1.1f) > critChance)
+        {
+
+        }
+
+        return damage;
     }
 }
