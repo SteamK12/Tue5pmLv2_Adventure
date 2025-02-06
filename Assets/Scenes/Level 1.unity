@@ -332,6 +332,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageMat: {fileID: 2100000, guid: 93de71acc81cba243b92006c879c17aa, type: 2}
+  health: 100
 --- !u!54 &757848552
 Rigidbody:
   m_ObjectHideFlags: 0

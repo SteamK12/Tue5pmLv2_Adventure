@@ -4,9 +4,10 @@ using UnityEngine;
 public class Damage : MonoBehaviour
 {
     [SerializeField] Material damageMat;
-    int health = 100;
+    [SerializeField] int health = 100;
     Material normalMat;
     MeshRenderer rend;
+    bool isHurt, isDefeated;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -18,15 +19,32 @@ public class Damage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(health <= 0)
+        {
+            isDefeated = true;
+        }
+        else if(health < 30)
+        {
+            isDefeated = false;
+            isHurt = true;
+        }
+        else
+        {
+            isDefeated = false;
+            isHurt = false;
+        }
     }
 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Weapon"))
         {
-            print(other.name);
-            health -= 10;
+            Transform weapon = other.transform.parent;
+
+            if (weapon.TryGetComponent<Sword>(out Sword sword))
+            {
+                health -= sword.DealDamage();
+            }
             StartCoroutine(DamageAnimation());
         }
     }
@@ -34,7 +52,17 @@ public class Damage : MonoBehaviour
     IEnumerator DamageAnimation()
     {
         rend.material = damageMat;
-        yield return new WaitForSeconds(0.1f);
-        rend.material = normalMat;
+        if (isDefeated == false)
+        {
+            yield return new WaitForSeconds(0.1f);
+            rend.material = normalMat;
+            
+            if (isHurt == true)
+            {
+                yield return new WaitForSeconds(0.5f);
+                StartCoroutine(DamageAnimation());
+            }
+        }
+        
     }
 }

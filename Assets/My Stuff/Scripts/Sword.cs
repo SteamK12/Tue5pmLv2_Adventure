@@ -28,11 +28,11 @@ public class Sword : MonoBehaviour
 
     public int DealDamage()
     {
-        if(Random.Range(0,1.1f) > critChance)
+        if(Random.Range(0f,1f) > critChance)
         {
-
+            return damage;
         }
 
-        return damage;
+        return (int)Mathf.Floor( damage * 1.5f);
     }
 }
