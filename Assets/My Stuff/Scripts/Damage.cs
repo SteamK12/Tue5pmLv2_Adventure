@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Damage : MonoBehaviour
@@ -48,6 +49,19 @@ public class Damage : MonoBehaviour
             StartCoroutine(DamageAnimation());
         }
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Weapon"))
+        {
+            Transform weapon = collision.transform;
+
+            if (weapon.TryGetComponent<Projectile>(out Projectile projectile))
+            {
+                health -= projectile.DealDamage();
+            }
+            StartCoroutine(DamageAnimation());
+        }
+    }
 
     IEnumerator DamageAnimation()
     {
@@ -63,6 +77,10 @@ public class Damage : MonoBehaviour
                 StartCoroutine(DamageAnimation());
             }
         }
-        
+        else
+        {
+            yield return new WaitForSeconds(1);
+            Destroy(transform.parent.gameObject);
+        }
     }
 }
