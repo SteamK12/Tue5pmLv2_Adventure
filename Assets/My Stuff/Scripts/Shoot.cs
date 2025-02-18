@@ -4,13 +4,18 @@ using UnityEngine;
 public class Shoot : MonoBehaviour
 {
     [SerializeField] GameObject projectile;
-    bool isShooting;
+    public bool isShooting;
     public float force;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         //projectile = Resources.Load<GameObject>("Projectile");
+    }
+
+    private void OnEnable()
+    {
+        isShooting = false;
     }
 
     // Update is called once per frame
